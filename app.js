@@ -20,5 +20,4 @@ app.get('/', (req, res) => { // retrieve every rows
 		}
 	});
 })
-
 module.exports = app;
