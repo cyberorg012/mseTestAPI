@@ -9,7 +9,6 @@ router.get('/', (req, res) => { // retrieve every rows
 	db.then(client => {
 		client.query("select * from gallery_comment", (err, rows) => {
 			if (!err) {
-				// console.log(rows);
 				return res.json(rows);
 			} else {
 				console.log(`query error : ${err}`);
