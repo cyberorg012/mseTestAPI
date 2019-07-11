@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 const db = require('../database/config');
+let User = require('../model/user');
 
 // create new user (id, password, username fields required)
 router.post('/register', (req, res) => {
@@ -22,9 +23,42 @@ router.post('/register', (req, res) => {
     }
     const admin = 0;
     const created_at = new Date();
-    console.log("id: " + id + ", username: " + username + ", created_at: " + created_at);
+    // try {
+    //     const { id, password, username } = req.body;
+    //     const admin = 0;
+    //     const created_at = new Date();
+    //     if (typeof id !== 'string') {
+    //         throw new Error('ID must be a string.');
+    //     }
+    //     if (typeof password !== 'string') {
+    //         throw new Error('Password must be a string.');
+    //     }
+    //     if (typeof username !== 'string') {
+    //         throw new Error('Username must be a string.');
+    //     }
+    //     console.log("id: " + id + ", username: " + username + ", created_at: " + created_at);
+    //     const newUser = {
+    //         id: id,
+    //         password: password,
+    //         username: username,
+    //         admin: admin,
+    //         created_at: created_at
+    //     }
+    //     let returnjson = User.createUser(newUser);
+    //     return res.status(returnjson.number).json({message: returnjson.message});
+    // } catch (err) {
+    //     return res.status(400).json({error: [
+    //         {
+    //           title: 'Registration Error',
+    //           detail: 'Something went wrong during registration process.',
+    //           errorMessage: err.message,
+    //         },
+    //       ]
+    //     });
+    // }
 
     let sql = "INSERT INTO user (id, password, admin, username, created_at, password_salt) VALUES ?";
+
     // db.then(client => {
     //     client.query("SELECT TOP 1 * FROM user WHERE id = " + id, (err, rows) => {
     //         if (rows) {
@@ -33,6 +67,7 @@ router.post('/register', (req, res) => {
     //         }
     //     })
     // })
+
     bcrypt.genSalt(10, function(err, salt) { // bcrypt generates SALT
         if (err) {
             console.log(err);
@@ -40,7 +75,10 @@ router.post('/register', (req, res) => {
         }
         console.log("salt: " + salt);
         bcrypt.hash(password, salt, function(err, hash){ // bcrypt HASHes password with salt
-            if(!err) {
+            if(err) {
+                console.log(err);
+                return res.status(501).json({error: "Password Hashing failed"});
+            } else {
                 let value = [[id, hash, admin, username, created_at, salt]];
                 console.log(value);
                 db.then(client => {
@@ -50,9 +88,6 @@ router.post('/register', (req, res) => {
                         console.log("Number of records inserted: " + result.affectedRows);
                     })
                 });
-            } else {
-                console.log(err);
-                return res.status(501).json({error: "Password Hashing failed"});
             }
         });
     })
@@ -63,6 +98,8 @@ router.post('/register', (req, res) => {
     };
     return res.status(201).json(newUser);
 })
+
+
 
 // delete existing user (id, password, username fields required)
 router.delete('/deregister', (req, res) => {
