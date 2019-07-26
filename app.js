@@ -1,6 +1,13 @@
 const express = require('express');
 const app = express();
 const db = require('./database/config');
+const cors = require('cors');
+
+const corsOptions = {
+	origin: 'http://localhost:3000',
+	credentials: true
+}
+app.use(cors(corsOptions));
 
 app.use('/api/user', require('./router/user').user);
 app.use('/api/board', require('./router/board').board);
@@ -10,8 +17,8 @@ app.use('/api/gallery_comment', require('./router/gallery_comment').gallery_comm
 app.use('/api/schedule', require('./router/schedule').schedule);
 app.use('/api/auth', require('./router/auth').auth);
 
-app.listen(3000, () => {
-	console.log('Your API Listening on Port 3000!');
+app.listen(8080, () => {
+	console.log('Your API Listening on Port 8080!');
 });
 
 app.get('/api/welcome', (req, res) => { // root page

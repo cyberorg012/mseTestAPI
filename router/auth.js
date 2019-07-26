@@ -123,35 +123,38 @@ router.delete('/deregister', (req, res) => {
     };
     db.then(client => {
         client.query("select * from user where id = " + id, (err, rows) => {
-            if (!err) {
+            if (err) {
+                console.log(`query error : ${err}`);
+                return res.status(400).json({error: "Retrieve Error"});
+            } else {
                 if (!rows.length) {
                     return res.status(204).json({message: "No user with the given id"});
                 } else {
                     dbUser.id = rows[0].id;
                     dbUser.password = rows[0].password;
                     dbUser.username = rows[0].username;
-                    console.log(dbUser); // no problem, keep going
+                    console.log(dbUser);
                     bcrypt.compare(password, dbUser.password, (err, res) => {
-                        if (!err) {
+                        if (err) {
+                            console.log(err);
+                            return res.status(501).json({error: "Password Comparing Failed"});
+                        } else {
                             if (!res) { // if the given password is not matching
-                                res.status(401).json({error: "Wrong Password"});
+                                return res.status(401).json({error: "Wrong Password"});
                             } else {
                                 if (username == dbUser.username) {
                                     console.log("User with this id will be deleted: " + dbUser.id);
                                     client.query("delete from user where id = " + dbUser.id, (err, rows) => {
-                                        console.log("Testing");
+                                        if(err) throw err;
+                                        else {
+                                            return res.json(rows);
+                                        }
                                     });
                                 }
                             }
-                        } else {
-                            console.log(err);
-                            return res.status(501).json({error: "Password Comparing Failed"});
                         }
                     })
                 }
-            } else {
-                console.log(`query error : ${err}`);
-                return res.status(400).json({error: "Retrieve Error"});
             }
         })
     })
