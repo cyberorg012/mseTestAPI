@@ -5,6 +5,19 @@ router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 const db = require('../database/config');
 
+router.get('/:id', (req, res) => {
+	const id = req.params.id;
+	db.then(client => {
+		client.query("select * from board where id = ?", [id], (err, rows) => {
+			if (err) {
+				console.log(`query error : ${err}`);
+				return res.status(400).json({error: "Retrieve Error"});
+			}
+			res.json(rows);
+		})
+	})
+})
+
 router.get('/', (req, res) => { // retrieve every rows
 	db.then(client => {
 		client.query("select * from board", (err, rows) => {
@@ -20,7 +33,6 @@ router.get('/', (req, res) => { // retrieve every rows
 
 router.get('/category/:category', (req, res) => { // retrieve every rows
 	const category = req.params.category;
-	console.log(category);
 	db.then(client => {
 		client.query("select * from board where category = ?", [category], (err, rows) => {
 			if (err) {
