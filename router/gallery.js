@@ -24,6 +24,12 @@ router.get('/:id', (req, res) => { // retrieve single row
 				return res.status(400).json({error: "Retrieve Error"});
 			} else {
 				console.log(rows);
+				let hits = rows[0].hits + 1;
+				console.log(hits);
+				client.query("update gallery set hits = " + hits + " where id = " + id, (err, rows) => {
+					if (err) return res.json(err);
+					else console.log("hits successfully updated to " + hits);
+				})
 				return res.json(rows[0]); // just a single row out of the result
 			}
 		})

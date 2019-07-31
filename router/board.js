@@ -23,8 +23,9 @@ router.get('/:id', (req, res) => {
 			if (err) {
 				console.log(`query error : ${err}`);
 				return res.status(400).json({error: "Retrieve Error"});
+			} else {
+				res.json(rows);
 			}
-			res.json(rows);
 		})
 	})
 })
