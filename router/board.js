@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const bodyParser = require('body-parser')
-router.use(bodyParser.json());
-router.use(bodyParser.urlencoded({ extended: true }));
+// router.use(bodyParser.urlencoded({ extended: true }));
 const db = require('../database/config');
 
 router.get('/', (req, res) => { // retrieve every rows
@@ -18,7 +16,7 @@ router.get('/', (req, res) => { // retrieve every rows
 	})
 })
 
-router.get('/category/:category', (req, res) => { // retrieve every rows
+router.get('/category/:category', (req, res) => { // retrieve rows per category
 	const category = req.params.category;
 	console.log(category);
 	db.then(client => {

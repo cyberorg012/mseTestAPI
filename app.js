@@ -2,12 +2,16 @@ const express = require('express');
 const app = express();
 const db = require('./database/config');
 const cors = require('cors');
+const bodyParser = require('body-parser')
 
 const corsOptions = {
 	origin: 'http://localhost:3000',
 	credentials: true
 }
+
+// setting middlewares
 app.use(cors(corsOptions));
+app.use(bodyParser.json());
 
 app.use('/api/user', require('./router/user').user);
 app.use('/api/board', require('./router/board').board);
