@@ -1,4 +1,6 @@
 const express = require('express');
+const path = require('path')
+const multer = require('multer')
 const router = express.Router();
 // router.use(bodyParser.urlencoded({ extended: true }));
 const db = require('../database/config');
@@ -42,6 +44,26 @@ router.get('/category/:category', (req, res) => { // retrieve rows per category
 			}
 		});
 	})
+})
+const storage = multer.diskStorage({
+	destination: (req, file, cb) => {
+		cb(null, 'uploads/')
+	},
+	filename: (req, file, cb) => {
+		const ext = path.extname(file.originalname)
+		cb(null, path.basename(file.originalname, ext) + new Date().valueOf() + ext)
+	}
+})
+const upload = multer({
+	storage: storage,
+	limits: 10 * 1024 * 1024
+})
+router.post('/images', upload.array('images'), (req, res, next) => {
+	let url = []
+	for(var i=0; i<req.files.length; i++) {
+		url[i] = `//${process.env.addr}/img/${req.files[i].filename}`
+	}
+	res.json({ url: url})
 })
 
 module.exports.board = router;

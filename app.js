@@ -1,8 +1,10 @@
 const express = require('express');
+const path = require('path')
 const app = express();
 const db = require('./database/config');
 const cors = require('cors');
 const bodyParser = require('body-parser')
+require('dotenv').config()
 
 const corsOptions = {
 	origin: 'http://localhost:3000',
@@ -13,6 +15,8 @@ const corsOptions = {
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cors(corsOptions));
+
+app.use('/img', express.static(path.join(__dirname, '/uploads')))
 
 app.use('/api/user', require('./router/user').user);
 app.use('/api/board', require('./router/board').board);
