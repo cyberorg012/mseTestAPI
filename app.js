@@ -10,8 +10,9 @@ const corsOptions = {
 }
 
 // setting middlewares
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
 app.use(cors(corsOptions));
-app.use(bodyParser.json());
 
 app.use('/api/user', require('./router/user').user);
 app.use('/api/board', require('./router/board').board);
