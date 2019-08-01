@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
-router.use(bodyParser.json());
-router.use(bodyParser.urlencoded({ extended: true }));
+// router.use(bodyParser.urlencoded({ extended: true }));
 const db = require('../database/config');
 let User = require('../model/user');
 

@@ -1,8 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const bodyParser = require('body-parser')
-router.use(bodyParser.json());
-router.use(bodyParser.urlencoded({ extended: true }));
 const db = require('../database/config');
 
 router.get('/', (req, res) => { // retrieve every rows

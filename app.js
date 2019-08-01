@@ -3,13 +3,17 @@ const path = require('path')
 const app = express();
 const db = require('./database/config');
 const cors = require('cors');
+const bodyParser = require('body-parser')
 require('dotenv').config()
 
 const corsOptions = {
 	origin: 'http://localhost:3000',
 	credentials: true
 }
+
+// setting middlewares
 app.use(cors(corsOptions));
+app.use(bodyParser.json());
 
 app.use('/img', express.static(path.join(__dirname, '/uploads')))
 

@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
-router.use(bodyParser.json());
-router.use(bodyParser.urlencoded({ extended: true }));
+// router.use(bodyParser.urlencoded({ extended: true }));
 const db = require('../database/config');
 
 // retrieve every users
@@ -31,7 +29,7 @@ router.get('/:id', (req, res) => {
                     return res.status(204).json({message: "No user with the given id"});
                 } else {
                     console.log(rows);
-                    return res.json(rows);
+                    return res.json(rows[0]);
                 }
             } else {
                 console.log(`query error : ${err}`);
