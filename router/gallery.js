@@ -34,15 +34,15 @@ router.get('/:id', (req, res) => { // retrieve single row
 	// 		}
 	// 	})
 	// })
-	dbMethods.fetchDataWithID('gallery', id)
-	// .then((data) => {
-	// 	console.log(data.text);
-	// 	const row = data.text[0];
-	// 	return res.json(row);
-	// }, (error) => {
-	// 	console.log(`${error}`);
-	// 	return res.status(400).json({error: "Retrieve Error"});
-	// })
+	dbMethods.fetchDataWithID(id)
+	.then((data) => {
+		console.log(data.text);
+		const row = data.text[0];
+		return res.json(row);
+	}, (error) => {
+		console.log(`${error}`);
+		return res.status(400).json({error: "Retrieve Error"});
+	})
 })
 
 module.exports.gallery = router;
