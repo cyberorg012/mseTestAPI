@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-// router.use(bodyParser.urlencoded({ extended: true }));
 const db = require('../database/config');
 const dbMethods = require('../database/methods');
 
@@ -35,15 +34,15 @@ router.get('/:id', (req, res) => { // retrieve single row
 	// 		}
 	// 	})
 	// })
-	dbMethods.fetchDataWithID(id)
-	.then((data) => {
-		console.log(data.text);
-		const row = data.text[0];
-		return res.json(row);
-	}, (error) => {
-		console.log(`${error}`);
-		return res.status(400).json({error: "Retrieve Error"});
-	})
+	dbMethods.fetchDataWithID('gallery', id)
+	// .then((data) => {
+	// 	console.log(data.text);
+	// 	const row = data.text[0];
+	// 	return res.json(row);
+	// }, (error) => {
+	// 	console.log(`${error}`);
+	// 	return res.status(400).json({error: "Retrieve Error"});
+	// })
 })
 
 module.exports.gallery = router;

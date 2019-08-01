@@ -1,9 +1,8 @@
 const express = require('express');
+const router = express.Router();
+const db = require('../database/config');
 const path = require('path')
 const multer = require('multer')
-const router = express.Router();
-// router.use(bodyParser.urlencoded({ extended: true }));
-const db = require('../database/config');
 
 router.get('/', (req, res) => { // retrieve every rows
 	db.then(client => {
@@ -45,6 +44,7 @@ router.get('/category/:category', (req, res) => { // retrieve rows per category
 		});
 	})
 })
+
 const storage = multer.diskStorage({
 	destination: (req, file, cb) => {
 		cb(null, 'uploads/')

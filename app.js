@@ -3,7 +3,6 @@ const path = require('path')
 const app = express();
 const db = require('./database/config');
 const cors = require('cors');
-const bodyParser = require('body-parser')
 require('dotenv').config()
 
 const corsOptions = {
@@ -15,9 +14,9 @@ const corsOptions = {
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cors(corsOptions));
-
 app.use('/img', express.static(path.join(__dirname, '/uploads')))
 
+// router
 app.use('/api/user', require('./router/user').user);
 app.use('/api/board', require('./router/board').board);
 app.use('/api/board_comment', require('./router/board_comment').board_comment);
@@ -26,11 +25,11 @@ app.use('/api/gallery_comment', require('./router/gallery_comment').gallery_comm
 app.use('/api/schedule', require('./router/schedule').schedule);
 app.use('/api/auth', require('./router/auth').auth);
 
+//
 app.listen(8080, () => {
 	console.log('Your API Listening on Port 8080!');
 });
-
-app.get('/api/welcome', (req, res) => { // root page
+app.get('/api/welcome', (req, res) => {
 	res.send('Welcome to MSE Testing API!\n');
 });
 
