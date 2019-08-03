@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const db = require('../database/config');
-let User = require('../model/user');
+let User = require('../modules/user');
 
 // create new user (id, password, username fields required)
 router.post('/register', (req, res) => {
