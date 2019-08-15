@@ -5,9 +5,9 @@ const dbMethods = require('../modules/database');
 
 router.get('/', (req, res) => { // retrieve every rows
 	db.then(client => {
-		client.query("select * from gallery", (err, rows) => {
+		client.query("select * from gallery", (err, results) => {
 			if (!err) {
-				return res.json(rows);
+				return res.json(results);
 			} else {
 				console.log(`query error : ${err}`);
 				return res.send({error: "Retrieve Error"});

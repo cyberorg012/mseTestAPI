@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
-// router.use(bodyParser.urlencoded({ extended: true }));
 const db = require('../database/config');
 
 // retrieve every users

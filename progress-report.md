@@ -15,4 +15,14 @@ id를 파라미터로 받아 특정 테이블에서 1개의 row를 반환하는 
 * https://programmingsummaries.tistory.com/325
 * https://proinlab.com/archives/1811
 
-## 02/08/19
+## 13~15/08/19
+#### Sequelize 도입하기
+Node.js ORM 모듈 Sequelize 도입을 위해 npm을 이용하여 sequelize와 sequelize-cli를 설치하였다.
+그러나 SSH로 Sequelize의 DB 연결을 설정하는 방법을 찾지 못했기 때문에 일단 ORM 도입은 보류하기로 결정했다.
+해결책은 다음과 같이 두 가지이다:
+* Sequelize를 SSH로 연결하는 방법을 찾기
+* MSE DB를 SSH 뿐만 아니라 Standard로도 provide하도록 바꾸기
+### 참고한 페이지
+* https://medium.com/infocentric/setup-a-rest-api-with-sequelize-and-express-js-fae06d08c0a7
+
+## 15/08/19
