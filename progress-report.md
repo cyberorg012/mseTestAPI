@@ -25,4 +25,4 @@ Node.js ORM 모듈 Sequelize 도입을 위해 npm을 이용하여 sequelize와 s
 ### 참고한 페이지
 * https://medium.com/infocentric/setup-a-rest-api-with-sequelize-and-express-js-fae06d08c0a7
 
-## 15/08/19
+## 20/08/19

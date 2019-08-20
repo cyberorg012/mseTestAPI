@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-// router.use(bodyParser.urlencoded({ extended: true }));
 const db = require('../database/config');
+const userMethods = require('../modules/user');
 
 router.get('/', (req, res) => { // retrieve every rows
 	db.then(client => {
