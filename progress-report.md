@@ -26,3 +26,6 @@ Node.js ORM 모듈 Sequelize 도입을 위해 npm을 이용하여 sequelize와 s
 * https://medium.com/infocentric/setup-a-rest-api-with-sequelize-and-express-js-fae06d08c0a7
 
 ## 20/08/19
+#### module/user.js : createUser 메소드로 유저 sign in 과정 모듈화
+async.waterfall을 다시 이용해 (1) password hashing (2) db querying 두 단계를 수행하는 createUser 함수로 모듈화.
+그러나 이런 모듈화가 꼭 필요한 것인지 재고할 필요 있어보임: register / deregister 등의 기능이 둘 이상의 상황에서 발생할 가능성이 낮아보임.

@@ -32,13 +32,14 @@ const userMethods = {
             ((value) => {
                 let sql = "INSERT INTO user (id, password, admin, username, created_at, password_salt) VALUES ?";
                 db.then(client => {
-                    client.query(sql, [value], function(err, result) {
+                    client.query(sql, [value], function(err, res) {
                         if(err) {
                             cb(err, null);
                         } else {
                             console.log("Successfully signed up");
-                            console.log("Number of records inserted: " + result.affectedRows);
-                            cb(null, {message: "success"});
+                            console.log("Number of records inserted: " + res.affectedRows);
+                            console.log(value);
+                            cb(null, {message: "success", id: value[0][0], username: value[0][3]});
                         }
                     })
                 });
