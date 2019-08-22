@@ -29,3 +29,8 @@ Node.js ORM 모듈 Sequelize 도입을 위해 npm을 이용하여 sequelize와 s
 #### module/user.js : createUser 메소드로 유저 sign in 과정 모듈화
 async.waterfall을 다시 이용해 (1) password hashing (2) db querying 두 단계를 수행하는 createUser 함수로 모듈화.
 그러나 이런 모듈화가 꼭 필요한 것인지 재고할 필요 있어보임: register / deregister 등의 기능이 둘 이상의 상황에서 발생할 가능성이 낮아보임.
+
+## 22/08/19
+#### To-do list
+* dbMethods 모듈 이름 변경: postMethods 정도..? 좀더 명확한 네이밍이 필요하다
+* 게시판마다 새 게시글 올리는 POST API 설계: 파라미터를 선택할 수 있는 하나의 함수로 모듈화할 수 없을까?

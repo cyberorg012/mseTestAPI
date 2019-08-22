@@ -14,7 +14,7 @@ const userMethods = {
                         console.log(err);
                         cb(err, null);
                     } else {
-                        console.log("salt: " + salt);
+                        // console.log("salt: " + salt);
                         bcrypt.hash(newUser.password, salt, (err, hash) => {
                             if (err) {
                                 console.log(err);
@@ -39,7 +39,7 @@ const userMethods = {
                             console.log("Successfully signed up");
                             console.log("Number of records inserted: " + res.affectedRows);
                             console.log(value);
-                            cb(null, {message: "success", id: value[0][0], username: value[0][3]});
+                            cb(null, { message: "success", id: value[0][0], username: value[0][3] });
                         }
                     })
                 });
