@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../database/config');
-const dbMethods = require('../modules/database');
+const postMethods = require('../modules/post');
 
 router.get('/', (req, res) => { // retrieve every rows
 	db.then(client => {
@@ -17,7 +17,7 @@ router.get('/', (req, res) => { // retrieve every rows
 })
 router.get('/:id', (req, res) => { // retrieve single row
 	const id = req.params.id;
-	dbMethods.fetchDataWithID(id, (error, result) => {
+	postMethods.fetchDataWithID("gallery", id, (error, result) => {
 		if (error) {
 			console.log(`${error}`);
 			return res.send({error: "Retrieve Error"});
@@ -29,49 +29,15 @@ router.get('/:id', (req, res) => { // retrieve single row
 	})
 })
 router.post('/', (req, res) => { // create one (body param: title, student id, content)
-	db.then(client => {
-		client("select * from gallery", (err, rows) => {
-			if (!err) {
-				console.log("last element id: " + rows[rows.length-1].id);
-				newid = rows[rows.length-1].id + 1;
-
-				const title = req.body.title || '';
-				if (!title.length) {
-					return res.status(400).json({error: 'Empty title'});
-				}
-				const student_id = req.body.student_id || '';
-				if (!student_id.length) {
-					return res.status(400).json({error: 'Empty student id'});
-				}
-				const content = req.body.content || '';
-				if (!content.length) {
-					return res.status(400).json({error: 'Empty content'});
-				}
-				console.log("id: " + newid + ", title: " + title);
-				let sql = "insert into gallery (id, title, student_id, content) VALUES ?";
-				let values = [
-					[newid, title, student_id, content],
-				];
-				db.then(client => {
-					client(sql, [values], function (err, result) {
-						if (err) throw err;
-						console.log("Number of records inserted: " + result.affectedRows);
-					})
-				});
-
-				const newGalleryPost = {
-					id: newid,
-					title: title,
-					student_id: student_id,
-					content: content
-				};
-				return res.json(newGalleryPost);
-			} else {
-				console.log(`query error : ${err}`);
-				return res.status(400).json({ error: "Retrieve Error" });
-			}
-		});
-	});
+	postMethods.postData(req.body, (error, result) => {
+		if (error) {
+			console.log(`${error}`);
+			return res.status(400).json(error);
+		} else {
+			console.log(result);
+            return res.json(result);
+		}
+	})
 });
 router.delete('/:id', (req, res) => { // delete single row
 	console.log(req.params.id);

@@ -34,3 +34,8 @@ async.waterfall을 다시 이용해 (1) password hashing (2) db querying 두 단
 #### To-do list
 * dbMethods 모듈 이름 변경: postMethods 정도..? 좀더 명확한 네이밍이 필요하다
 * 게시판마다 새 게시글 올리는 POST API 설계: 파라미터를 선택할 수 있는 하나의 함수로 모듈화할 수 없을까?
+#### 모듈화 과정에서 table name 파라미터로 보내기: sql query 작성시 유의점
+number의 경우 ?와 []을 사용하여 dynamic하게 쿼리 작성이 가능하지만 string의 경우에는 불가능.
+따라서 임시방편으로 table_name 변수를 +연산자로 concatenate해서 쿼리 작성.
+### 참고한 페이지
+* http://www.sommarskog.se/dynamic_sql.html#objectnames
